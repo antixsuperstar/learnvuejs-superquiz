@@ -1,19 +1,35 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                <h3 class="text-center">Super quiz!</h3>
+                <hr />
+            </div>
+        </div>
+    </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+    import Guess from './components/Guess.vue';
 
-export default {
-  name: 'app',
-  components: {
-    HelloWorld
-  }
-}
+    export default {
+        name: 'app',
+        data() {
+            return {
+                intervals: [ -20, 20 ],
+                numbers: []
+            }
+        },
+        computed: {
+            range: this.intervals[0] + this.intervals[1]
+        },
+        methods: {
+
+        },
+        created() {
+
+        }
+    }
 </script>
 
 <style>
