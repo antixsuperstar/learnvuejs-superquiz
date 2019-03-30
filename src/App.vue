@@ -1,33 +1,59 @@
 <template>
     <div class="container">
         <div class="row">
-            <div class="col-md-6 offset-md-3">
+            <div class="col-md-8 offset-md-2">
                 <h3 class="text-center">Super quiz!</h3>
                 <hr />
+                <possible-guesses
+                        :numbers="numbers"
+                        :choices="choices"></possible-guesses>
+                <end-game></end-game>
             </div>
         </div>
     </div>
 </template>
 
 <script>
-    import Guess from './components/Guess.vue';
+    import { eventBus } from './main.js';
+    import PossibleGuesses from './components/PossibleGuesses.vue';
+    import EndGame from './components/EndGame.vue';
 
     export default {
         name: 'app',
         data() {
             return {
-                intervals: [ -20, 20 ],
-                numbers: []
+                range: 100,
+                numbers: [],
+                choices: [1,2,3],
+                playing: true
             }
         },
-        computed: {
-            range: this.intervals[0] + this.intervals[1]
-        },
         methods: {
-
+            newPair() {
+                for (let i = 0; i<2; i++) {
+                    this.numbers[i] = Math.floor(Math.random() * this.range * Math.pow(-1, i));
+                }
+                this.logPairs();
+            },
+            logPairs() {
+                console.log(this.numbers);
+            }
         },
         created() {
+            this.newPair();
 
+            eventBus.$on('choose', guess => {
+
+            });
+            eventBus.$on('newGame', function() {
+                console.log(this);
+                this.newPair();
+                this.playing = true;
+            });
+        },
+        components: {
+            possibleGuesses: PossibleGuesses,
+            endGame: EndGame
         }
     }
 </script>
